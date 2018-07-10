@@ -20,7 +20,7 @@ import me.jwill2385.instagram.model.Post;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private final String imagePath = "/storage/emulated/0/Download/senna.jpg.webp";
+    private final String imagePath = "/storage/emulated/0/Download/lightning.jpg";
     private EditText etDescription;
     private Button btnCreate;
     private Button btnRefresh;
