@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
-    private  Button btnSignUp;
+    private Button btnSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +29,15 @@ public class MainActivity extends AppCompatActivity {
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnSignUp = (Button) findViewById(R.id.btnSignUp) ;
+        btnSignUp = (Button) findViewById(R.id.btnSignUp);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            final String username = etUsername.getText().toString();
-            final String password = etPassword.getText().toString();
+                final String username = etUsername.getText().toString();
+                final String password = etPassword.getText().toString();
 
-            login(username, password);
+                login(username, password);
             }
 
 
@@ -61,12 +61,12 @@ public class MainActivity extends AppCompatActivity {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                if (e == null){
+                if (e == null) {
                     Log.d("Login Activity", "Login Successful");
                     final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
-                }else{
+                } else {
                     Log.e("Login Activity", "Login Failure");
                     e.printStackTrace();
                 }
@@ -75,18 +75,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void signUp(String username, String password){
+    private void signUp(String username, String password) {
 
         // Create the ParseUser
         ParseUser user = new ParseUser();
-// Set core properties
+        // Set core properties
         user.setUsername(username);
         user.setPassword(password);
-        
+
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
-                    // Hooray! Let them use the app now.
                     Toast.makeText(MainActivity.this, "New Account Created", Toast.LENGTH_SHORT).show();
                 } else {
                     e.printStackTrace();
