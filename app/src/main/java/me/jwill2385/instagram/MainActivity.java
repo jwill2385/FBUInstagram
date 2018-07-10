@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Login Activity", "Login Successful");
                     final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
+                    finish();
                 }else{
                     Log.e("Login Activity", "Login Failure");
                     e.printStackTrace();
