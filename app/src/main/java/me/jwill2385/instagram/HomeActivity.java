@@ -43,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
                 final String description = etDescription.getText().toString();
                 final ParseUser user = ParseUser.getCurrentUser();
 
+                
                 final File file = new File(imagePath);
                 final ParseFile parseFile = new ParseFile(file);
 
