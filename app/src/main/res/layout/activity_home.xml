@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity"
-    tools:showIn="@layout/activity_home">
+    tools:context=".HomeActivity">
 
     <EditText
         android:id="@+id/etDescription"
@@ -39,5 +38,24 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-82dp"
         android:text="Refresh" />
+
+    <ImageView
+        android:id="@+id/ivCamera"
+        android:layout_width="93dp"
+        android:layout_height="99dp"
+        android:layout_alignTop="@+id/btnCreate"
+        android:layout_toEndOf="@+id/etDescription"
+        android:onClick="onLaunchCamera"
+        app:srcCompat="@drawable/icon" />
+
+    <ImageView
+        android:id="@+id/ivPreview"
+        android:layout_width="68dp"
+        android:layout_height="64dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="46dp"
+        app:srcCompat="?android:attr/colorForeground" />
 
 </RelativeLayout>
