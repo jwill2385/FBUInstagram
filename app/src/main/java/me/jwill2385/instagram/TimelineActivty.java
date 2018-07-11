@@ -1,6 +1,7 @@
 package me.jwill2385.instagram;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,18 +17,20 @@ import me.jwill2385.instagram.model.Post;
 
 public class TimelineActivty extends AppCompatActivity {
 
+    private SwipeRefreshLayout swipeContainer;
+
     InstaAdapter instaAdapter;
     ArrayList<Post> myposts;
     RecyclerView rvPost;
-    // REQUEST_CODE can be any value we like, used to determine the result type later
-    private final int REQUEST_CODE = 20;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline_activty);
 
         rvPost = (RecyclerView) findViewById(R.id.rvPost);
-
+        // Lookup the swipe container view
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         // initiate arraylist (data source)
         myposts = new ArrayList<>();
         // construct the adapter from this data source
@@ -36,8 +39,23 @@ public class TimelineActivty extends AppCompatActivity {
         rvPost.setLayoutManager(new LinearLayoutManager(this));
         // set the adapter
         rvPost.setAdapter(instaAdapter);
-
         loadTopPost();
+
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                fetchTimelineAsync(0);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
 
 //        // Specify which class to query
@@ -86,6 +104,41 @@ public class TimelineActivty extends AppCompatActivity {
         });
 
    }
+
+    public void fetchTimelineAsync(int page) {
+        final Post.Query postQuery = new Post.Query();
+        postQuery.getTop().withUser();
+        postQuery.newestFirst().withUser();
+
+        postQuery.findInBackground(new FindCallback<Post>(){
+
+
+            @Override
+            public void done(List<Post> objects, ParseException e) {
+                if (e == null){
+                    // clear out adapter and array
+                    myposts.clear();
+                    instaAdapter.clear();
+                    //now add all the post back
+                    myposts.addAll(objects);
+
+                    for(int i = 0; i < objects.size(); i++){
+                        Log.d("RefreshingtopPost", "Post[" + i + "]");
+                    }
+                }else{
+                    e.printStackTrace();
+                }
+            }
+
+        });
+        // Now we call setRefreshing(false) to signal refresh has finished
+                swipeContainer.setRefreshing(false);
+
+
+
+
+    }
+
 
 
 }

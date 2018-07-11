@@ -14,7 +14,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText etUsername;
     private EditText etPassword;
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
             public void done(ParseUser user, ParseException e) {
                 if ( e == null) {
                     Log.d("Login Activity", "Login Successful");
-                    //final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    final Intent intent = new Intent(MainActivity.this, TimelineActivty.class);
+                    //final Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    final Intent intent = new Intent(LoginActivity.this, TimelineActivty.class);
                     startActivity(intent);
                     finish();
                 } else {
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
-                    Toast.makeText(MainActivity.this, "New Account Created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "New Account Created", Toast.LENGTH_SHORT).show();
                 } else {
                     e.printStackTrace();
                 }

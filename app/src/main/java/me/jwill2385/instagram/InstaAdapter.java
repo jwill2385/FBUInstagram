@@ -83,4 +83,17 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
             tvCaption = (TextView) itemView.findViewById(R.id.tvCaption);
         }
     }
+
+
+    // Clean all elements of the recycler
+    public void clear() {
+        mPost.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addAll(List<Post> list) {
+        mPost.addAll(list);
+        notifyDataSetChanged();
+    }
 }
