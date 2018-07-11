@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="143dp"
+        android:layout_marginTop="236dp"
         android:ems="10"
         android:hint="enter a description"
         android:inputType="text"
@@ -50,12 +50,11 @@
 
     <ImageView
         android:id="@+id/ivPreview"
-        android:layout_width="68dp"
-        android:layout_height="64dp"
-        android:layout_alignParentEnd="true"
+        android:layout_width="134dp"
+        android:layout_height="156dp"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="25dp"
-        android:layout_marginTop="46dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
         app:srcCompat="?android:attr/colorForeground" />
 
 </RelativeLayout>
