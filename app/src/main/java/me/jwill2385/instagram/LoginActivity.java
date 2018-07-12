@@ -30,6 +30,15 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnSignUp = (Button) findViewById(R.id.btnSignUp);
+        ParseUser user = ParseUser.getCurrentUser();
+
+        //this is for persistence to keep you logged in
+        if (user != null) {
+            final Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         });
+
     }
 
 
@@ -61,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                if ( e == null) {
+                if (e == null) {
                     Log.d("Login Activity", "Login Successful");
                     //final Intent intent = new Intent(LoginActivity.this, PostFragment.class);
                     final Intent intent = new Intent(LoginActivity.this, MainActivity.class);
