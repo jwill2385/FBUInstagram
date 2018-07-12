@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context=".PostFragment">
 
     <EditText
         android:id="@+id/etDescription"
@@ -43,7 +43,6 @@
         android:layout_height="99dp"
         android:layout_alignTop="@+id/btnCreate"
         android:layout_toEndOf="@+id/etDescription"
-        android:onClick="onLaunchCamera"
         app:srcCompat="@drawable/icon" />
 
     <ImageView

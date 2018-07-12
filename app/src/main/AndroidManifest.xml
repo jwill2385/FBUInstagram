@@ -31,10 +31,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".PostFragment"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TimelineActivty"></activity>
+        <activity android:name=".HomeFragment" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

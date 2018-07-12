@@ -7,98 +7,79 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
-import java.util.List;
 
 import me.jwill2385.instagram.model.Post;
 
-public class HomeActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PostFragment.OnItemSelectedListener {
 
-    private final String imagePath = "/storage/emulated/0/Download/lightning.jpg";
-    private EditText etDescription;
-    private Button btnCreate;
-    private Button btnRefresh;
 
+    public static final String TAG = PostFragment.class.getSimpleName();
+    BottomNavigationView bottomNavigationView;
     public final String APP_TAG = "MyCustomApp";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public String photoFileName = "photo.jpg";
     File photoFile;
-
-
-
-    public static final String TAG = HomeActivity.class.getSimpleName();
+    PostFragment fragment2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "Home activity has started");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_main);
+        final FragmentManager fragmentManager = getSupportFragmentManager();
 
-        etDescription = (EditText) findViewById(R.id.etDescription);
-        btnCreate = (Button) findViewById(R.id.btnCreate);
-        btnRefresh = (Button) findViewById(R.id.btnRefresh);
+        // define your fragments here
+        final HomeFragment fragment1 = new HomeFragment();
+        fragment2 = new PostFragment();
+//        final Fragment fragment3 = new ProfileFragment();
 
-        btnCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String description = etDescription.getText().toString();
-                final ParseUser user = ParseUser.getCurrentUser();
-
-                final ParseFile parseFile = new ParseFile(photoFile);
-
-                parseFile.saveInBackground(new SaveCallback() {
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        // handle navigation selection
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            createPost(description, parseFile, user);
-                        } else {
-                            e.printStackTrace();
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.ic_home:
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.flContainer, fragment1).commit();
+                                return true;
+                            case R.id.ic_newPost:
+                                FragmentTransaction fragmentTransaction2 = fragmentManager.beginTransaction();
+                                fragment2 = new PostFragment();
+                                fragmentTransaction2.replace(R.id.flContainer, fragment2).commit();
+                                return true;
+                            case R.id.ic_profile:
+                                // FragmentTransaction fragmentTransaction3 = fragmentManager.beginTransaction();
+                                // fragmentTransaction3.replace(R.id.flContainer, fragment3).commit();
+                                return true;
                         }
+                        return false;
                     }
                 });
 
-            }
-        });
-
-        btnRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadTopPosts(); // loads the posts
-            }
-        });
-
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-
     }
 
-    private void createPost(String description, ParseFile imageFile, ParseUser user) {
+
+    @Override
+    public void createPost(String description, ParseFile imageFile, ParseUser user) {
         Log.d(TAG, "We are in createPost()");
         final Post newPost = new Post();
         newPost.setDescription(description);
@@ -116,38 +97,43 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-    }
+        bottomNavigationView.setSelectedItemId(R.id.ic_home);
 
-    // this function grabs all post and puts in background thread
-    private void loadTopPosts() {
-        final Post.Query postsQuery = new Post.Query();
-        postsQuery.getTop().withUser();
-        postsQuery.findInBackground(new FindCallback<Post>() {
-
-            @Override
-            public void done(List<Post> objects, ParseException e) {
-
-                if (e == null) {
-
-                    for (int i = 0; i < objects.size(); ++i) {
-                        Log.d(TAG, "Post[" + i + "] = "
-                                + objects.get(i).getDescription()
-                                + "\nusername = " + objects.get(i).getUser().getUsername());
-                    }
-                } else {
-                    e.printStackTrace();
-                }
-            }
-        });
 
     }
 
+//    // this function grabs all post and puts in background thread
+//    @Override
+//    public void loadTopPosts() {
+//        final Post.Query postsQuery = new Post.Query();
+//        postsQuery.getTop().withUser();
+//        postsQuery.findInBackground(new FindCallback<Post>() {
+//
+//            @Override
+//            public void done(List<Post> objects, ParseException e) {
+//
+//                if (e == null) {
+//
+//                    for (int i = 0; i < objects.size(); ++i) {
+//                        Log.d(TAG, "Post[" + i + "] = "
+//                                + objects.get(i).getDescription()
+//                                + "\nusername = " + objects.get(i).getUser().getUsername());
+//                    }
+//                } else {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//
+//    }
+
+    @Override
     public void onLaunchCamera(View view) {
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Create a File reference to access to future access
         photoFile = getPhotoFileUri(photoFileName);
-
+        sendPhotoFile();
         // wrap File object into a content provider
         // required for API >= 24
         // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
@@ -160,6 +146,11 @@ public class HomeActivity extends AppCompatActivity {
             // Start the image capture intent to take photo
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
+    }
+
+    // must update the photofragments picturefile with the one we just took
+    private void sendPhotoFile(){
+        fragment2.photoFile = photoFile;
     }
 
     // Returns the File for a photo stored on disk given the fileName
