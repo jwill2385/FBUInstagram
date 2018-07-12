@@ -28,15 +28,6 @@
         android:layout_marginBottom="82dp"
         android:text="Create" />
 
-    <Button
-        android:id="@+id/btnRefresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnCreate"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-82dp"
-        android:text="Refresh" />
-
     <ImageView
         android:id="@+id/ivCamera"
         android:layout_width="93dp"

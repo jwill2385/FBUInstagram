@@ -97,9 +97,8 @@ public class MainActivity extends AppCompatActivity implements PostFragment.OnIt
             }
         });
 
+        // now send user to timeline screen (Home Fragment)
         bottomNavigationView.setSelectedItemId(R.id.ic_home);
-
-
     }
 
 //    // this function grabs all post and puts in background thread

@@ -25,7 +25,6 @@ public class PostFragment extends Fragment {
     private final String imagePath = "/storage/emulated/0/Download/lightning.jpg";
     private EditText etDescription;
     private Button btnCreate;
-    private Button btnRefresh;
     private ImageView ivCamera;
 
     public final String APP_TAG = "MyCustomApp";
@@ -49,9 +48,11 @@ public class PostFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         etDescription = (EditText) view.findViewById(R.id.etDescription);
         btnCreate = (Button) view.findViewById(R.id.btnCreate);
-        btnRefresh = (Button) view.findViewById(R.id.btnRefresh);
         ivCamera = (ImageView) view.findViewById(R.id.ivCamera);
         Log.d(TAG, "Home activity has started");
+
+        // auto launches the camera
+        listener.onLaunchCamera(view);
 
 
         ivCamera.setOnClickListener(new View.OnClickListener() {
@@ -83,12 +84,7 @@ public class PostFragment extends Fragment {
             }
         });
 
-//        btnRefresh.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                listener.loadTopPosts(); // loads the posts
-//            }
-//        });
+
     }
 
     //how fragment communicates with activity
@@ -110,6 +106,5 @@ public class PostFragment extends Fragment {
                     + " must implement PostFragment.OnItemSelectedListener");
         }
     }
-
 
 }
