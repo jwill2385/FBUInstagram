@@ -90,7 +90,6 @@ public class PostFragment extends Fragment {
     //how fragment communicates with activity
     public interface  OnItemSelectedListener{
 
-        //void loadTopPosts();
         void onLaunchCamera(View view);
         void createPost(String description, ParseFile imageFile, ParseUser user);
 

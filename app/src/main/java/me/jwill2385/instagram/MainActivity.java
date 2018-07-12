@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
@@ -28,7 +29,7 @@ import java.io.File;
 
 import me.jwill2385.instagram.model.Post;
 
-public class MainActivity extends AppCompatActivity implements PostFragment.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements PostFragment.OnItemSelectedListener, ProfileFragment.OnLogoutSelectedListener {
 
 
     public static final String TAG = PostFragment.class.getSimpleName();
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements PostFragment.OnIt
         // define your fragments here
         final HomeFragment fragment1 = new HomeFragment();
         fragment2 = new PostFragment();
-//        final Fragment fragment3 = new ProfileFragment();
+        final Fragment fragment3 = new ProfileFragment();
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         // handle navigation selection
@@ -67,8 +68,8 @@ public class MainActivity extends AppCompatActivity implements PostFragment.OnIt
                                 fragmentTransaction2.replace(R.id.flContainer, fragment2).commit();
                                 return true;
                             case R.id.ic_profile:
-                                // FragmentTransaction fragmentTransaction3 = fragmentManager.beginTransaction();
-                                // fragmentTransaction3.replace(R.id.flContainer, fragment3).commit();
+                                 FragmentTransaction fragmentTransaction3 = fragmentManager.beginTransaction();
+                                 fragmentTransaction3.replace(R.id.flContainer, fragment3).commit();
                                 return true;
                         }
                         return false;
@@ -100,31 +101,6 @@ public class MainActivity extends AppCompatActivity implements PostFragment.OnIt
         // now send user to timeline screen (Home Fragment)
         bottomNavigationView.setSelectedItemId(R.id.ic_home);
     }
-
-//    // this function grabs all post and puts in background thread
-//    @Override
-//    public void loadTopPosts() {
-//        final Post.Query postsQuery = new Post.Query();
-//        postsQuery.getTop().withUser();
-//        postsQuery.findInBackground(new FindCallback<Post>() {
-//
-//            @Override
-//            public void done(List<Post> objects, ParseException e) {
-//
-//                if (e == null) {
-//
-//                    for (int i = 0; i < objects.size(); ++i) {
-//                        Log.d(TAG, "Post[" + i + "] = "
-//                                + objects.get(i).getDescription()
-//                                + "\nusername = " + objects.get(i).getUser().getUsername());
-//                    }
-//                } else {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//
-//    }
 
     @Override
     public void onLaunchCamera(View view) {
@@ -186,5 +162,18 @@ public class MainActivity extends AppCompatActivity implements PostFragment.OnIt
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public void logout(ParseUser user) {
+        ParseUser.logOut();
+        ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+        if(currentUser == null)
+        {
+            Log.i("Logout","Logout successful");
+        }
+        Intent a = new Intent(this, LoginActivity.class);
+        startActivity(a);
+        finish();
     }
 }
