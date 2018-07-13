@@ -25,6 +25,7 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import me.jwill2385.instagram.model.Post;
@@ -48,7 +49,29 @@ public class MainActivity extends AppCompatActivity implements PostFragment.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // todo- try to set user avatar here if they don't have one
+        //gives user profile image if they don't have one
+        final ParseFile avatarFile = ParseUser.getCurrentUser().getParseFile("image");
+        if(avatarFile == null) {
+            // todo- try to set user avatar here if they don't have one
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.instagram_user_filled_24);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            // Compress image to lower quality scale 1 - 100
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] image = stream.toByteArray();
+            // Create the ParseFile
+            ParseFile file = new ParseFile("instagram_user_filled_24.png", image);
+            // Upload the image into Parse Cloud
+            ParseUser user = ParseUser.getCurrentUser();
+            user.put("image", file);
+
+            user.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                }
+            });
+        }
+
 
         // define your fragments here
         final HomeFragment fragment1 = new HomeFragment();

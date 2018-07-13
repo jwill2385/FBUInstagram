@@ -78,26 +78,6 @@ public class HomeFragment extends Fragment{
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-
-//        // Specify which class to query
-//        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-//// Specify the object id
-//        query.getInBackground("aFuEsvjoHt", new GetCallback<Post>() {
-//            public void done(Post item, ParseException e) {
-//                if (e == null) {
-//                    // Access data using the `get` methods for the object
-//                    String body = item.getDescription();
-//                    // Access special values that are built-in to each object
-//                    String objectId = item.getObjectId();
-//                    Date updatedAt = item.getUpdatedAt();
-//                    Date createdAt = item.getCreatedAt();
-//                    // Do whatever you want with the data...
-//                    Toast.makeText(Post, body, Toast.LENGTH_SHORT).show();
-//                } else {
-//                    // something went wrong
-//                }
-//            }
-//        });
    }
 
    private  void loadTopPost(){

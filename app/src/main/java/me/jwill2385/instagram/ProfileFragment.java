@@ -35,14 +35,17 @@ public class ProfileFragment extends Fragment {
         btnLogout = (Button) view.findViewById(R.id.btnLogout);
 
         final ParseFile avatarFile = ParseUser.getCurrentUser().getParseFile("image");
-        if (avatarFile != null) {
-            Glide.with(this)
+        Glide.with(this)
                     .load(avatarFile.getUrl())
                     .into(ivPicture);
-        } else {
-            // set a default avatar
-            ivPicture.setImageResource(R.drawable.instagram_user_filled_24);
-        }
+//        if (avatarFile != null) {
+//            Glide.with(this)
+//                    .load(avatarFile.getUrl())
+//                    .into(ivPicture);
+//        } else {
+//            // set a default avatar
+//            ivPicture.setImageResource(R.drawable.instagram_user_filled_24);
+//        }
 
 
         ivPicture.setOnClickListener(new View.OnClickListener() {
