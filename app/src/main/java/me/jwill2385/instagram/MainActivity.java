@@ -29,7 +29,8 @@ import java.io.File;
 
 import me.jwill2385.instagram.model.Post;
 
-public class MainActivity extends AppCompatActivity implements PostFragment.OnItemSelectedListener, ProfileFragment.OnLogoutSelectedListener {
+public class MainActivity extends AppCompatActivity implements PostFragment.OnItemSelectedListener, ProfileFragment.OnLogoutSelectedListener,
+        HomeFragment.MainActivityListener {
 
 
     public static final String TAG = PostFragment.class.getSimpleName();
@@ -39,12 +40,15 @@ public class MainActivity extends AppCompatActivity implements PostFragment.OnIt
     public String photoFileName = "photo.jpg";
     File photoFile;
     PostFragment fragment2;
+    PostDetailsFragment detailsFragment;
+    final FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // todo- try to set user avatar here if they don't have one
 
         // define your fragments here
         final HomeFragment fragment1 = new HomeFragment();
@@ -175,5 +179,13 @@ public class MainActivity extends AppCompatActivity implements PostFragment.OnIt
         Intent a = new Intent(this, LoginActivity.class);
         startActivity(a);
         finish();
+    }
+
+    @Override
+    public void sendPostToMainActivity(Post post) {
+       detailsFragment = new PostDetailsFragment();
+        detailsFragment.post = post;
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.flContainer, detailsFragment).commit();
     }
 }

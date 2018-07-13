@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.util.Date;
@@ -22,6 +24,7 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
 
     Context context;
     private List<Post> mPost;  // this list will store all my post
+    private AdapterListener newListener;
 
     //pass in post to adapter
     public InstaAdapter(List<Post> posts){
@@ -49,7 +52,17 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
         holder.tvCaption.setText(post.getDescription());
         holder.tvTimeStamp.setText(getRelativeTime(post.getCreatedAt()));
 
-        Glide.with(context).load(ParseUser.getCurrentUser().getParseFile("image").getUrl()).into(holder.ivProfile);
+        //todo- i want to remove this if possible
+        final ParseFile avatarFile = ParseUser.getCurrentUser().getParseFile("image");
+        if (avatarFile != null){
+            Glide.with(context).load(ParseUser.getCurrentUser().getParseFile("image").getUrl()).into(holder.ivProfile);
+        }else{
+            // set a default avatar
+            holder.ivProfile.setImageResource(R.drawable.instagram_user_filled_24);
+        }
+
+
+        //Glide.with(context).load(ParseUser.getCurrentUser().getParseFile("image").getUrl()).into(holder.ivProfile);
         Glide.with(context).load(post.getImage().getUrl()).into(holder.ivPostPicture);
 
     }
@@ -59,7 +72,7 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
         return mPost.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         // initiate variables
         public ImageView ivProfile;
@@ -87,6 +100,25 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
             tvUsername = (TextView) itemView.findViewById(R.id.tvUsername);
             tvCaption = (TextView) itemView.findViewById(R.id.tvCaption);
             tvTimeStamp = (TextView) itemView.findViewById(R.id.tvTimeStamp);
+
+            itemView.setOnClickListener(this);
+        }
+
+
+        @Override
+        public void onClick(View view) {
+            // get postion
+            int position= getAdapterPosition();
+            //check if positino is not empty
+            if(position != RecyclerView.NO_POSITION){
+                // get the post
+                Post post = mPost.get(position);
+
+                Toast.makeText(itemView.getContext(),"Got the post", Toast.LENGTH_LONG).show();
+                newListener.sendPostToHomeFragment(post);
+
+
+            }
         }
     }
 
@@ -112,6 +144,12 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
         return relativeDate;
     }
 
+    public void setNewListener(AdapterListener listener){
+        newListener = listener;
+    }
+    public  interface AdapterListener{
+        void sendPostToHomeFragment(Post post);
+    }
 
 
 }

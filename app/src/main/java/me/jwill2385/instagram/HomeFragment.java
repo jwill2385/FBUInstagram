@@ -1,5 +1,6 @@
 package me.jwill2385.instagram;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,13 +21,14 @@ import java.util.List;
 
 import me.jwill2385.instagram.model.Post;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
 
     private SwipeRefreshLayout swipeContainer;
 
     InstaAdapter instaAdapter;
     ArrayList<Post> myposts;
     RecyclerView rvPost;
+    private MainActivityListener listener;
 
 
     @Nullable
@@ -54,6 +56,12 @@ public class HomeFragment extends Fragment {
         rvPost.setAdapter(instaAdapter);
         loadTopPost();
 
+        instaAdapter.setNewListener(new InstaAdapter.AdapterListener() {
+            @Override
+            public void sendPostToHomeFragment(Post post) {
+                listener.sendPostToMainActivity(post);
+            }
+        });
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -147,11 +155,20 @@ public class HomeFragment extends Fragment {
         // Now we call setRefreshing(false) to signal refresh has finished
                 swipeContainer.setRefreshing(false);
 
-
-
-
     }
 
+    public interface MainActivityListener{
+        void sendPostToMainActivity(Post post);
+    }
 
-
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof MainActivityListener){
+            listener = (MainActivityListener) context;
+        }else{
+            throw new ClassCastException(context.toString()
+            + "must implement MainActivityListener");
+        }
+    }
 }

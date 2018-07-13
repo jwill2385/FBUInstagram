@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 
@@ -32,8 +33,24 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ivPicture = view.findViewById(R.id.ivPicture);
         btnLogout = (Button) view.findViewById(R.id.btnLogout);
-        Glide.with(getContext()).load(ParseUser.getCurrentUser().getParseFile("image").getUrl()).into(ivPicture);
 
+        final ParseFile avatarFile = ParseUser.getCurrentUser().getParseFile("image");
+        if (avatarFile != null) {
+            Glide.with(this)
+                    .load(avatarFile.getUrl())
+                    .into(ivPicture);
+        } else {
+            // set a default avatar
+            ivPicture.setImageResource(R.drawable.instagram_user_filled_24);
+        }
+
+
+        ivPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // todo – grab photo from device or have user take pic.
+            }
+        });
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override

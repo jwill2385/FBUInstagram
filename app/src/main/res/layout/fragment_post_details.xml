@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivComment"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignEnd="@+id/tvUsername"
+        android:layout_alignTop="@+id/ivLike"
+        app:srcCompat="@drawable/ufi_comment" />
+
+    <ImageView
+        android:id="@+id/ivProfile"
+        android:layout_width="37dp"
+        android:layout_height="36dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="?android:attr/colorForeground" />
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@+id/ivProfile"
+        android:text="Username" />
+
+    <ImageView
+        android:id="@+id/ivPostPicture"
+        android:layout_width="197dp"
+        android:layout_height="234dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="59dp"
+        app:srcCompat="?android:attr/colorForeground" />
+
+    <TextView
+        android:id="@+id/tvCaption"
+        android:layout_width="94dp"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="144dp"
+        android:text="Caption" />
+
+    <ImageView
+        android:id="@+id/ivLike"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="74dp"
+        android:layout_toStartOf="@+id/tvUsername"
+        app:srcCompat="@drawable/ufi_heart_icon" />
+
+    <ImageView
+        android:id="@+id/ivChat"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignEnd="@+id/ivPostPicture"
+        android:layout_alignTop="@+id/ivLike"
+        app:srcCompat="@drawable/direct" />
+
+    <ImageView
+        android:id="@+id/ivSave"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/ivLike"
+        android:layout_marginEnd="31dp"
+        app:srcCompat="@drawable/media_option_button" />
+
+    <TextView
+        android:id="@+id/tvTimeStamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/ivChat"
+        android:text="Time stamp" />
+</RelativeLayout>
