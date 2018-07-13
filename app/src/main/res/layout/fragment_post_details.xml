@@ -31,8 +31,8 @@
 
     <ImageView
         android:id="@+id/ivPostPicture"
-        android:layout_width="197dp"
-        android:layout_height="234dp"
+        android:layout_width="239dp"
+        android:layout_height="291dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="59dp"
@@ -44,16 +44,17 @@
         android:layout_height="46dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="144dp"
-        android:text="Caption" />
+        android:layout_marginBottom="85dp"
+        android:text="Caption"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <ImageView
         android:id="@+id/ivLike"
         android:layout_width="22dp"
         android:layout_height="22dp"
+        android:layout_alignEnd="@+id/ivProfile"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="74dp"
-        android:layout_toStartOf="@+id/tvUsername"
+        android:layout_marginBottom="23dp"
         app:srcCompat="@drawable/ufi_heart_icon" />
 
     <ImageView
@@ -80,4 +81,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/ivChat"
         android:text="Time stamp" />
+
+    <TextView
+        android:id="@+id/tvPostDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ivProfile"
+        android:layout_centerHorizontal="true"
+        android:text="Post Details" />
 </RelativeLayout>
