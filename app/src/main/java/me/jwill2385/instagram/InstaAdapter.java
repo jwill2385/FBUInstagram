@@ -52,15 +52,6 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
         holder.tvCaption.setText(post.getDescription());
         holder.tvTimeStamp.setText(getRelativeTime(post.getCreatedAt()));
 
-        //todo- i want to remove this if possible
-//        final ParseFile avatarFile = ParseUser.getCurrentUser().getParseFile("image");
-//        if (avatarFile != null){
-//            Glide.with(context).load(ParseUser.getCurrentUser().getParseFile("image").getUrl()).into(holder.ivProfile);
-//        }else{
-//            // set a default avatar
-//            holder.ivProfile.setImageResource(R.drawable.instagram_user_filled_24);
-//        }
-
         ParseUser user = post.getUser();
         ParseFile profileImage = user.getParseFile("image");
 

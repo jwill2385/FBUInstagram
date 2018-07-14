@@ -44,14 +44,6 @@ public class ProfileFragment extends Fragment {
                     .load(avatarFile.getUrl())
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                     .into(ivPicture);
-//        if (avatarFile != null) {
-//            Glide.with(this)
-//                    .load(avatarFile.getUrl())
-//                    .into(ivPicture);
-//        } else {
-//            // set a default avatar
-//            ivPicture.setImageResource(R.drawable.instagram_user_filled_24);
-//        }
 
         tvUsernameProfile.setText(ParseUser.getCurrentUser().getUsername());
 
