@@ -10,8 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -20,6 +23,7 @@ public class ProfileFragment extends Fragment {
      private ImageView ivPicture;
      private Button btnLogout;
      private OnLogoutSelectedListener listener;
+     private TextView tvUsernameProfile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,10 +37,12 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ivPicture = view.findViewById(R.id.ivPicture);
         btnLogout = (Button) view.findViewById(R.id.btnLogout);
+        tvUsernameProfile = (TextView) view.findViewById(R.id.tvUsernameProfile);
 
         final ParseFile avatarFile = ParseUser.getCurrentUser().getParseFile("image");
         Glide.with(this)
                     .load(avatarFile.getUrl())
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                     .into(ivPicture);
 //        if (avatarFile != null) {
 //            Glide.with(this)
@@ -46,6 +52,8 @@ public class ProfileFragment extends Fragment {
 //            // set a default avatar
 //            ivPicture.setImageResource(R.drawable.instagram_user_filled_24);
 //        }
+
+        tvUsernameProfile.setText(ParseUser.getCurrentUser().getUsername());
 
 
         ivPicture.setOnClickListener(new View.OnClickListener() {

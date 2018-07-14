@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,10 +93,6 @@ public class HomeFragment extends Fragment{
                 if (e == null){
                     myposts.addAll(objects);
                     instaAdapter.notifyDataSetChanged();
-
-                    for(int i = 0; i < objects.size(); i++){
-                        Log.d("LoadTopPost", "Post[" + i + "]");
-                    }
                 }else{
                     e.printStackTrace();
                 }
@@ -122,10 +117,6 @@ public class HomeFragment extends Fragment{
                     instaAdapter.clear();
                     //now add all the post back
                     myposts.addAll(objects);
-
-                    for(int i = 0; i < objects.size(); i++){
-                        Log.d("RefreshingtopPost", "Post[" + i + "]");
-                    }
                 }else{
                     e.printStackTrace();
                 }
