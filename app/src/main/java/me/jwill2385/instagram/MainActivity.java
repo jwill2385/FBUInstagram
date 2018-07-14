@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements PostFragment.OnIt
         //gives user profile image if they don't have one
         final ParseFile avatarFile = ParseUser.getCurrentUser().getParseFile("image");
         if(avatarFile == null) {
-            // todo- try to set user avatar here if they don't have one
+            // set user avatar here if they don't have one
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.instagram_user_filled_24);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             // Compress image to lower quality scale 1 - 100
